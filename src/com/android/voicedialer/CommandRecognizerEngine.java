@@ -1206,7 +1206,8 @@ public class CommandRecognizerEngine extends RecognizerEngine {
     // only add if different
     private static void addCallIntent(ArrayList<Intent> intents, Uri uri, String literal,
             String phoneType, int flags) {
-        Intent intent = new Intent(Intent.ACTION_CALL_PRIVILEGED, uri)
+        //Intent intent = new Intent(Intent.ACTION_CALL_PRIVILEGED, uri) // FIXME not allowed in a user app
+        Intent intent = new Intent(Intent.ACTION_CALL, uri)
                 .setFlags(flags)
                 .putExtra(SENTENCE_EXTRA, literal)
                 .putExtra(PHONE_TYPE_EXTRA, phoneType);

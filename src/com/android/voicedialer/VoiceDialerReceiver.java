@@ -20,7 +20,8 @@ package com.android.voicedialer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.BroadcastReceiver;
-import com.android.internal.telephony.TelephonyIntents;
+/* FIXME requires access to android/platform/frameworks/base
+import com.android.internal.telephony.TelephonyIntents; */
 import android.util.Log;
 import android.widget.Toast;
 
@@ -49,6 +50,7 @@ public class VoiceDialerReceiver extends BroadcastReceiver {
             CommandRecognizerEngine.deleteCachedGrammarFiles(context);
         }
 
+        /* FIXME TelephonyIntents.SECRET_CODE_ACTION cannot be used in a user app
         // Voice Dialer Logging Enabled, *#*#8351#*#*
         else if (TelephonyIntents.SECRET_CODE_ACTION.equals(action) && "8351".equals(host)) {
             RecognizerLogger.enable(context);
@@ -60,5 +62,6 @@ public class VoiceDialerReceiver extends BroadcastReceiver {
             RecognizerLogger.disable(context);
             Toast.makeText(context, R.string.logging_disabled, Toast.LENGTH_LONG).show();
         }
+        */
     }
 }

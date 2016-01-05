@@ -33,7 +33,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.os.SystemProperties;
+/* FIXME SystemProperties are not available to user apps
+import android.os.SystemProperties; */
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -152,6 +153,9 @@ public class VoiceDialerActivity extends Activity {
     private static final int SPEAKING_CHOSEN_ACTION = 7;
     private static final int SPEAKING_GOODBYE = 8;
     private static final int EXITING = 9;
+    
+    /* FIXME hack because AudioManager.STREAM_BLUETOOTH_SCO is not available to user apps */
+    private static final int STREAM_BLUETOOTH_SCO = 6;
 
     private static final CommandRecognizerEngine mCommandEngine =
             new CommandRecognizerEngine();
@@ -234,7 +238,9 @@ public class VoiceDialerActivity extends Activity {
         mChoiceClient = new ChoiceRecognizerClient();
 
         mAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (BluetoothHeadset.isBluetoothVoiceDialingEnabled(this) && mAdapter != null) {
+        /* FIXME BluetoothHeadset.isBluetoothVoiceDialingEnabled() is not available to user apps, assume true
+        if (BluetoothHeadset.isBluetoothVoiceDialingEnabled(this) && mAdapter != null) { */
+        if (mAdapter != null) {
            if (!mAdapter.getProfileProxy(this, mBluetoothHeadsetServiceListener,
                                          BluetoothProfile.HEADSET)) {
                Log.e(TAG, "Getting Headset Proxy failed");
@@ -349,11 +355,11 @@ public class VoiceDialerActivity extends Activity {
             // (See AudioSystem.cpp linearToLog()) so the number of steps corresponding
             // to 18dB is 18 / (50 / maxSteps).
             mBluetoothVoiceVolume = mAudioManager.getStreamVolume(
-                    AudioManager.STREAM_BLUETOOTH_SCO);
-            int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_BLUETOOTH_SCO);
+                    STREAM_BLUETOOTH_SCO);
+            int maxVolume = mAudioManager.getStreamMaxVolume(STREAM_BLUETOOTH_SCO);
             int volume = maxVolume - ((18 / (50/maxVolume)) + 1);
             if (mBluetoothVoiceVolume > volume) {
-                mAudioManager.setStreamVolume(AudioManager.STREAM_BLUETOOTH_SCO, volume, 0);
+                mAudioManager.setStreamVolume(STREAM_BLUETOOTH_SCO, volume, 0);
             }
 
             if (mWaitingForScoConnection) {
@@ -778,7 +784,8 @@ public class VoiceDialerActivity extends Activity {
 
                     if (mUsingBluetooth &&
                             (intents.length == 1 ||
-                             !Intent.ACTION_CALL_PRIVILEGED.equals(
+                             //!Intent.ACTION_CALL_PRIVILEGED.equals( // FIXME not allowed in a user app
+                             !Intent.ACTION_CALL.equals(
                                     intents[0].getAction()))) {
                         // When we're running in bluetooth mode, we expect
                         // that the user is not looking at the screen and cannot
@@ -1069,7 +1076,8 @@ public class VoiceDialerActivity extends Activity {
         if (name == null) return null;
         String arg = getIntent().getStringExtra(name);
         if (arg != null) return arg;
-        arg = SystemProperties.get("app.voicedialer." + name);
+        /* FIXME SystemProperties are not available to user apps
+        arg = SystemProperties.get("app.voicedialer." + name); */
         return arg != null && arg.length() > 0 ? arg : null;
     }
 
@@ -1110,7 +1118,7 @@ public class VoiceDialerActivity extends Activity {
         }
 
         // set the volume back to the level it was before we started.
-        mAudioManager.setStreamVolume(AudioManager.STREAM_BLUETOOTH_SCO,
+        mAudioManager.setStreamVolume(STREAM_BLUETOOTH_SCO,
                                       mBluetoothVoiceVolume, 0);
         mAudioManager.abandonAudioFocus(null);
 
