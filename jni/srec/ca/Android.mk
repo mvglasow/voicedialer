@@ -73,6 +73,7 @@ common_C_INCLUDES := \
 	$(ASR_ROOT_DIR)/srec/include \
 	$(ASR_ROOT_DIR)/srec/clib \
 	$(ASR_ROOT_DIR)/srec/cfront \
+	$(AOSP_ROOT_DIR)/system/core/include \
 
 common_CFLAGS += \
 	$(ASR_GLOBAL_DEFINES) \
