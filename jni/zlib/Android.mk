@@ -29,18 +29,6 @@ LOCAL_SRC_FILES := $(zlib_files)
 ifeq ($(TARGET_ARCH),arm)
   LOCAL_SDK_VERSION := 9
 endif
-include $(BUILD_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-
-LOCAL_ARM_MODE := arm
-LOCAL_MODULE := libz
-LOCAL_MODULE_TAGS := optional
-LOCAL_CFLAGS += -O3 -DUSE_MMAP
-LOCAL_SRC_FILES := $(zlib_files)
-ifeq ($(TARGET_ARCH),arm)
-  LOCAL_SDK_VERSION := 9
-endif
 include $(BUILD_STATIC_LIBRARY)
 
 
