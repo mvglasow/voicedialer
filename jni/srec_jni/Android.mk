@@ -29,6 +29,10 @@ LOCAL_C_INCLUDES := \
   $(ASR_ROOT_DIR)/srec/AcousticModels/include \
   $(ASR_ROOT_DIR)/srec/AcousticState/include \
   $(ASR_ROOT_DIR)/audio/AudioIn/UNIX/include \
+  $(AOSP_ROOT_DIR)/system/core/include \
+  $(AOSP_ROOT_DIR)/hardware/libhardware/include \
+  $(AOSP_ROOT_DIR)/frameworks/native/include \
+  $(AOSP_ROOT_DIR)/frameworks/av/include \
 
 LOCAL_C_INCLUDES += \
   $(JNI_H_INCLUDE) \
