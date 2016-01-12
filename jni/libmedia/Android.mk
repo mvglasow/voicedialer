@@ -77,6 +77,11 @@ LOCAL_C_INCLUDES := \
     $(call include-path-for, graphics corecg) \
     $(TOP)/frameworks/native/include/media/openmax \
     external/icu4c/common \
+    $(AOSP_ROOT_DIR)/frameworks/av/include \
+    $(AOSP_ROOT_DIR)/frameworks/native/include \
+    $(AOSP_ROOT_DIR)/hardware/libhardware/include \
+    $(AOSP_ROOT_DIR)/system/core/include \
+    $(AOSP_ROOT_DIR)/system/media/audio_utils/include \
     $(call include-path-for, audio-effects) \
     $(call include-path-for, audio-utils)
 
