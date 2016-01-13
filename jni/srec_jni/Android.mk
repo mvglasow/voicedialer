@@ -43,6 +43,9 @@ LOCAL_CFLAGS += \
   $(ASR_GLOBAL_DEFINES) \
   $(ASR_GLOBAL_CPPFLAGS) \
 
+LOCAL_LDLIBS := \
+  -llog \
+
 LOCAL_SHARED_LIBRARIES := \
   libutils \
   libhardware_legacy \
