@@ -46,6 +46,9 @@ LOCAL_CFLAGS += \
 LOCAL_LDLIBS := \
   -llog \
 
+LOCAL_LDFLAGS := \
+  -Wl,--unresolved-symbols=ignore-all
+
 LOCAL_SHARED_LIBRARIES := \
   libutils \
   libhardware_legacy \
